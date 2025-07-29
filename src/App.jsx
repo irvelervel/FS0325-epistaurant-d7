@@ -6,8 +6,19 @@ import CustomNavbar from './components/CustomNavbar'
 import Home from './components/Home'
 import ReservationForm from './components/ReservationForm'
 import ReservationList from './components/ReservationList'
+import { useState } from 'react'
 
 function App() {
+  // App ha bisogno di una variabile di stato per poter informare ReservationList
+  // che ReservationForm ha inviato una nuova prenotazione
+
+  const [trigger, setTrigger] = useState(false)
+
+  const toggleTrigger = () => {
+    // questa funzione INVERTE il valore di trigger
+    setTrigger(!trigger)
+  }
+
   return (
     <>
       {/* <CustomNavbar tema="light" /> */}
@@ -16,12 +27,12 @@ function App() {
       di React, la sezione "prenotazioni esistenti" verrà momentaneamente inserita
       qui, sopra il form di prenotazione :( */}
 
-      <ReservationList />
+      <ReservationList trigger={trigger} />
 
       {/* poiché non sappiamo ancora come gestire il routing in una SPA
       di React, la sezione "prenota un tavolo" verrà momentaneamente inserita
       qui, sopra il carosello :( */}
-      <ReservationForm />
+      <ReservationForm toggleTrigger={toggleTrigger} />
       <Home />
     </>
   )

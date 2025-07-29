@@ -39,7 +39,7 @@ import { TrashFill } from 'react-bootstrap-icons'
 // ogni componente React potrà decidere in autonomia di effettuare operazioni
 // al suo AVVIO
 
-const ReservationList = () => {
+const ReservationList = (props) => {
   const [reservations, setReservations] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [isError, setIsError] = useState(false)
@@ -52,6 +52,17 @@ const ReservationList = () => {
   //   isLoading: true,
   //   isError: false,
   // }
+
+  // al cambiare del valore della prop "trigger" noi dobbiamo RI-FETCHARE
+  // le prenotazioni (perchè significa che il ReservationForm ha inviato con
+  // successo una nuova prenotazione e noi vogliamo che venga recuperata
+  // in real-time)
+
+  // rimpiazzo per componentDidMount + componentDidUpdate
+  useEffect(() => {
+    console.log('RECUPERO PRENOTAZIONI')
+    getReservations()
+  }, [props.trigger])
 
   // creo la funzione per la chiamata GET
   const getReservations = () => {
@@ -114,11 +125,6 @@ const ReservationList = () => {
   }
 
   // nuovo superpotere dei componenti a classe: il metodo componentDidMount()
-
-  // rimpiazzo per componentDidMount
-  useEffect(() => {
-    getReservations()
-  }, [])
 
   // componentDidMount() {
   //   console.log('IO SONO COMPONENTDIDMOUNT')
